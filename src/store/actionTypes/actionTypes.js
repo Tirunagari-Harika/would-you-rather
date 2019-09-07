@@ -1,0 +1,5 @@
+export const ALL_USERS = "ALL_USERS";
+export const LOGIN_CURRENT_USER = "LOGIN_CURRENT_USER";
+export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
+
+export const GET_QUESTIONS = "GET_QUESTIONS";
