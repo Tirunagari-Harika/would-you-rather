@@ -1,15 +1,20 @@
 import * as actionTypes from "../actionTypes/actionTypes";
 import * as api from "../../_DATA";
 
-const questions = () => {
-    return { type:actionTypes.GET_QUESTIONS };
+const questions = (data,currentUserId) => {
+    return { type:actionTypes.GET_QUESTIONS,payload:{
+        questions: data,
+        currentUserId: currentUserId
+    } };
 }
 
-export const getquestionsActions = (dispatch) => {
-    return api._getQuestions().then((data) => {
-        return dispatch(questions());
-    })
-    .catch((err) => {
-        console.log("Error in Questions Action ",err);
-    })
+export const getquestionsActions = (currentUserId) => {
+    return (dispatch) => {
+        return api._getQuestions().then((data) => {
+            dispatch(questions(data,currentUserId));
+        })
+        .catch((err) => {
+            console.log("Error in Questions Action ",err);
+        })
+    }   
 }

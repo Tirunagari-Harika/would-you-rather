@@ -1,13 +1,7 @@
 import * as actionTypes from "../actionTypes/actionTypes";
 import { users, currentUser } from "../initialStore/initialStore";
+import { Arr } from "./utility";
 
-const usersArr = (users) => {
-    let usrArr = [];
-    for(let i in users){
-        usrArr.push(users[i]);
-    }
-    return usrArr;
-}
 
 const getCurrentUser = ({users,id}) =>{
     return users[id];
@@ -18,7 +12,7 @@ export const getUsersReducer = (state = users,action) => {
        // console.log("getUsers Reducer ",action);
       //  const allUsers = usersArr(action.payload);
        // console.log("all Users ",allUsers);
-        return {...state, users: usersArr(action.payload)};
+        return {...state, users: Arr(action.payload)};
     }
 
     return state;
