@@ -9,7 +9,7 @@ class Home extends Component{
     }
     
     render(){
-
+        console.log("Home ",this.props);
         return(<div>Home</div>)
     }
 }
@@ -27,4 +27,6 @@ const mapDispatchToProps = () => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default Home;
+
+//export default connect(mapStateToProps,mapDispatchToProps)(Home);

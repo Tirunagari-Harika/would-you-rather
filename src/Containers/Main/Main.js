@@ -17,21 +17,15 @@ class Main extends Component{
         return(<MainWrapperStyles>
             <div className="header">React App</div>
             <BrowserRouter>
-                <Route path="/"  component={UserProfile}/>            
-                {this.props.currentUser && this.props.currentUser.name !== ""?
-                    (<Fragment>
-                        <Route path="/home" exact component={Home} />
-                        <Route path="/add" exact component={NewQuestion} />
-                        <Route path="/leaderboard" exact component={LeaderBoard} />
-                    </Fragment>)
-                 :null}
+                <Route path="/"  component={UserProfile}/>              
+                <Route path="/home" exact component={Home} />
+                <Route path="/add" exact component={NewQuestion} />
+                <Route path="/leaderboard" exact component={LeaderBoard} />            
                 
                 <Switch>
                     <Route path="/login" exact   component={Login}/>
                     <Route path="/"  exact   component={Login}/>
                 </Switch>
-                
-
             </BrowserRouter>
         </MainWrapperStyles>)
     }

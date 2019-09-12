@@ -31,8 +31,18 @@ class UserProfile extends Component{
     render(){
        // console.log("UserProfile Render ====== ",this.props);
         return (<ul className="links">                    
-            <li><NavLink to="/home" activeClassName="activeLink">Home</NavLink></li>
-            <li><NavLink to="/add" activeClassName="activeLink">New Question</NavLink></li>
+            <li><NavLink 
+                to={{
+                    pathname:"/home",
+                    state: { currentUser:this.props.currentUser }
+                }}
+                 activeClassName="activeLink">Home</NavLink></li>
+            <li><NavLink 
+                to={{
+                    pathname:"/add",
+                    state: { currentUser:this.props.currentUser }
+                }}
+                activeClassName="activeLink">New Question</NavLink></li>
             <li><NavLink to="/leaderboard" activeClassName="activeLink">Leader Board</NavLink></li> 
             {this.getUserData()}
         </ul>)
