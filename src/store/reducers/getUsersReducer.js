@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes/actionTypes";
 import { users, currentUser } from "../initialStore/initialStore";
-import { Arr } from "./utility";
+import { getArray } from "./utility";
 
 
 const getCurrentUser = ({users,id}) =>{
@@ -12,7 +12,7 @@ export const getUsersReducer = (state = users,action) => {
        // console.log("getUsers Reducer ",action);
       //  const allUsers = usersArr(action.payload);
        // console.log("all Users ",allUsers);
-        return {...state, users: Arr(action.payload)};
+        return {...state, users: getArray(action.payload)};
     }
 
     return state;

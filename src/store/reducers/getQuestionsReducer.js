@@ -1,42 +1,38 @@
 import {questions} from "../initialStore/initialStore";
 import * as actionTypes from "../actionTypes/actionTypes";
-import { Arr } from "./utility";
+import { getArray, checkSingleEleInArr } from "./utility";
 
-const checkVotes = (votes,question,cid) => {
-    let answeredArr = [];
-    let unansweredArr = [];
-
-    if(!votes) return { 
-        answeredquestions:answeredArr,
-        unansweredquestions:unansweredArr
+// checking the vote in optionOne and OptionTwo
+const checkUserAnsweredQuestion = (question,currentUserId) => {
+    if((!question.optionOne.votes && !question.optionTwo.votes) ||
+        (!question.optionOne.votes.length && !question.optionTwo.votes.length)){
+        return false;
     }
-
-    if(votes.length == 0){
-        unansweredArr.push(question);
-    }else{
-        if(votes.indexOf(cid) != -1){
-            answeredArr.push(question);
-        }else{
-            unansweredArr.push(question);
-        }
+    // votes of optionOne
+    if(question.optionOne.votes && 
+        checkSingleEleInArr(question.optionOne.votes,currentUserId)){
+        return true;
     }
+    // votes of optionTwo
+    if(question.optionTwo.votes && 
+        checkSingleEleInArr(question.optionTwo.votes,currentUserId)){
+        return true;
+    }   
 
-    return {
-        answeredquestions:answeredArr,
-        unansweredquestions:unansweredArr
-    }
-
-    
-
-
+    return false;
 }
 
-const filterquestions = (questions,cId) => {
+// categorizing answered and unanswered questions
+const categorizeQuestions = (questions,currentUserId) => {
     let answeredArr = [];
     let unansweredArr = [];
 
     for(let i=0; i<questions.length; i++){
-        let obj = checkVotes()
+        if(checkUserAnsweredQuestion(questions[i],currentUserId)){
+            answeredArr.push(questions[i]);
+        }else{
+            unansweredArr.push(questions[i]);
+        }
     }
     return {
         answeredquestions:answeredArr,
@@ -47,9 +43,9 @@ const filterquestions = (questions,cId) => {
 export const getQuestionsReducer = (state=questions,action) => {
     switch(action.type){
         case actionTypes.GET_QUESTIONS:
-            let arr = Arr(action.payload.questions);
+            let arr = getArray(action.payload.questions);
             arr = arr.sort((a,b) => b.timestamp - a.timestamp);
-            let newState = filterquestions(arr,action.payload.currentUserId)
+            let newState = categorizeQuestions(arr,action.payload.currentUserId)
             return {...state, questions:newState};
         default:
             return state;
@@ -67,3 +63,19 @@ export const getQuestionsReducer = (state=questions,action) => {
 }else if(questions[i].optionOne.votes){
     unansweredArr.push(questions[i]);
 } */
+
+
+/* if(question.optionOne.votes.length){
+    let votesOneArr = question.optionOne.votes;
+    if(votesOneArr.indexOf(currentUserId) !== -1){
+        return true;
+    }
+}
+
+// votes of OptionTwo
+if(question.optionTwo.votes.length){
+    let votesTwoArr = question.optionTwo.votes;
+    if(votesTwoArr.indexOf(currentUserId) !== -1){
+        return true;
+    }
+}    */

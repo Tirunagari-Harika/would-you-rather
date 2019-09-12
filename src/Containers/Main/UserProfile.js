@@ -43,7 +43,12 @@ class UserProfile extends Component{
                     state: { currentUser:this.props.currentUser }
                 }}
                 activeClassName="activeLink">New Question</NavLink></li>
-            <li><NavLink to="/leaderboard" activeClassName="activeLink">Leader Board</NavLink></li> 
+            <li><NavLink 
+                to={{
+                    pathname:"/leaderboard",
+                    state: { currentUser:this.props.currentUser }
+                }} 
+                activeClassName="activeLink">Leader Board</NavLink></li> 
             {this.getUserData()}
         </ul>)
     }

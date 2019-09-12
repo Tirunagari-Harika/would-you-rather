@@ -1,16 +1,45 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import * as questionActions from "../../store/actionCreators/questionActions";
 /* import * as userActions from "../../store/actionCreators/userActions"; */
 import { connect } from "react-redux";
 
 class Home extends Component{
-    componentDidMount(){
-        this.props.getQuestions(this.props.currentUser.id);
+
+    state = {
+        showUnanswered: true
+    }
+    
+    shouldUpdateQuestions(prevProps){
+        if((!prevProps.currentUser) ||
+        // first attempt using the app first time
+        (this.props.currentUser &&
+            prevProps.currentUser &&  
+            prevProps.currentUser.id !== this.props.currentUser.id) ||
+            // checking user from second time
+        (this.props.questions && this.props.questions.length &&
+            this.props.questions.length !== prevProps.questions.length)){
+            // change in questions
+            return true;
+        }
+        return false;
+    }
+
+    componentDidUpdate(prevProps){
+        // user exists and there is a change in no. of questions
+        if(this.shouldUpdateQuestions(prevProps)){
+            this.props.getQuestions(this.props.currentUser.id);
+        }        
     }
     
     render(){
         console.log("Home ",this.props);
-        return(<div>Home</div>)
+        return(<Fragment>
+            <div>
+                <div>UnAnswered Questions</div>
+                <div>Answered Questions</div>
+                <div>Questions</div>
+            </div>
+        </Fragment>)
     }
 }
 
@@ -28,10 +57,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-<<<<<<< HEAD
-export default Home;
+//export default Home;
 
-//export default connect(mapStateToProps,mapDispatchToProps)(Home);
-=======
 export default connect(mapStateToProps,mapDispatchToProps)(Home);
->>>>>>> ac2f48ffe47bac1e6f7f83d48f2a5b5ce6647ada
